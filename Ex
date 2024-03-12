@@ -87,3 +87,61 @@ Step 5: Start the Server
 Run your server using Node.js:
 Step 6: Access the Web Server
 Open a web browser and visit http://localhost:3000 to see your server's response.
+
+
+8.Program to implement Nodejs simple routing to serve different pages with EJS templates and a layout structure
+Step 1: Set Up Your Project
+Create a new directory for your project and initialize npm:
+Step 2: Install Required Packages
+Install the http module (built-in) and ejs (templating engine):
+Step 3: Create the Server File
+Create a file named server.js in your project directory.
+const http = require('http');
+const fs = require('fs');
+const ejs = require('ejs');
+// Read the layout template
+const layoutTemplate = fs.readFileSync('./views/layout.ejs', 'utf-8');
+// Render function to inject content into layout
+function renderContent(content, title = 'Node.js HTTP Server') {
+return ejs.render(layoutTemplate, { content, title }); }
+// Create an HTTP server
+const server = http.createServer((req, res) => {
+if (req.url === '/' || req.url === '/home') {
+// Read the home page content
+const homePageContent = fs.readFileSync('./views/home.ejs', 'utf-8'); const renderedContent = renderContent(homePageContent, 'Home Page'); res.writeHead(200, { 'Content-Type': 'text/html' }); res.end(renderedContent);
+} else if (req.url === '/about') {
+// Read the about page content
+const aboutPageContent = fs.readFileSync('./views/about.ejs', 'utf-8'); const renderedContent = renderContent(aboutPageContent, 'About Page'); res.writeHead(200, { 'Content-Type': 'text/html' }); res.end(renderedContent);
+} else {
+// Handle 404 - Page Not Found res.writeHead(404, { 'Content-Type': 'text/plain' }); res.end('404 - Page Not Found');
+} });
+// Set the server to listen on port 3000 const port = 3000;
+server.listen(port, () => {
+console.log(`Server is running on http://localhost:${port}`); });
+Step 4: Create Views (EJS Templates)
+Create a views directory in your project folder and create home.ejs, about.ejs, and layout.ejs files inside it.
+views/home.ejs
+       Prof Santosh N MMEC, Belagavi
+ 
+   ANGULAR JS AND NODE
+JS21CSL581
+ views/about.ejs
+views/layout.ejs
+<!DOCTYPE html> <html>
+<head>
+<title><%= title %></title> </head>
+<body>
+<header> <nav>
+<a href="/">Home</a>
+<a href="/about">About</a> </nav>
+</header> <main>
+<%= content %> </main>
+<footer>
+<p>&copy; 2023 Node HTTP Server</p> </footer>
+</body> </html>
+Step 5: Run the Server Execute the server by running:
+Step 6: Access the Web Pages
+Open a web browser and visit http://localhost:3000 to see the home page and http://localhost:3000/about for the about page.
+
+
+
