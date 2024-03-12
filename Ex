@@ -1,0 +1,89 @@
+t5).     HTML (index.html):
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+<title>AngularJS Services</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> </head>
+<body>
+<div ng-controller="MyController as ctrl">
+<h1>Internal and Custom AngularJS Services Example</h1>
+<button ng-click="ctrl.loadData()">Load Data</button> <ul>
+<li ng-repeat="item in ctrl.items">{{ item.name }}</li> </ul>
+</div>
+<script> angular.module('myApp', [])
+// Custom AngularJS Service .service('DataService', ['$http', function($http) {
+this.fetchData = function() {
+return $http.get('https://jsonplaceholder.typicode.com/users'); // Example API endpoint
+}; }])
+.controller('MyController', ['DataService', function(DataService) { var vm = this;
+vm.items = [];
+// Using the custom service within the controller
+vm.loadData = function() { DataService.fetchData()
+.then(function(response) { vm.items = response.data;
+}) .catch(function(error) {
+console.error('Error fetching data:', error); });
+}; }]);
+</script> </body> </html>
+
+6 . Create angularjs HTTP Services program for Building Database, Front End and BackEnd
+index.html:
+This file contains the HTML structure and references to AngularJS and your application script.
+app.js:
+This file contains the AngularJS application logic, including the main controller.
+services/backendService.js:
+This file contains the service that simulates backend functionality by providing data to the controller.
+Frontend (AngularJS): HTML:
+index.html
+<!DOCTYPE html> <html ng-app="myApp"> <head>
+<title>AngularJS HTTP Services</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> <script src="app.js"></script>
+</head>
+<body ng-controller="MainController as main">
+<h1>Books</h1> <ul>
+<li ng-repeat="book in main.books"> {{ book.title }} by {{ book.author }}
+</li> </ul>
+</body> </html>
+JavaScript: app.js
+angular.module('myApp', [])
+.controller('MainController', ['$http', 'BackendService', function($http, BackendService) {
+var main = this;
+main.books = [];
+// Fetch data from the simulated backend service BackendService.getBooks()
+.then(function(response) { main.books = response;
+}) .catch(function(error) {
+console.error('Error fetching data:', error); });
+}]);
+services/backendService.js:
+angular.module('myApp')
+.service('BackendService', ['$q', '$timeout', function($q, $timeout) {
+this.getBooks = function() {
+var deferred = $q.defer();
+// Simulating HTTP request delay $timeout(function() {
+var books = [
+{ title: 'Book 1', author: 'Author 1' }, { title: 'Book 2', author: 'Author 2' },
+// Add more inbuilt data as needed ];
+deferred.resolve(books); }, 1000);
+return deferred.promise; };
+}]);
+
+
+7 .Create program Building a Webserver with Node displaying message “Hello, this is your web server!”
+Step 1: Set Up Your Project
+First, create a new directory for your project and navigate into it using the terminal:
+Step 2: Initialize npm
+Initialize npm in your project directory to manage dependencies:
+Step 3: Install Required Packages
+Install the http module, which is a part of Node.js, and express, a popular web framework for Node.js:
+Step 4: Create the Server File
+Create a file named server.js in your project directory.
+// Import required modules
+const express = require('express');
+// Create an Express application const app = express();
+// Define a route to handle GET requests to the root URL app.get('/', (req, res) => {
+res.send('Hello, this is your web server!'); });
+// Start the server on port 3000 const port = 3000; app.listen(port, () => {
+console.log(`Server is running on http://localhost:${port}`); });
+Step 5: Start the Server
+Run your server using Node.js:
+Step 6: Access the Web Server
+Open a web browser and visit http://localhost:3000 to see your server's response.
